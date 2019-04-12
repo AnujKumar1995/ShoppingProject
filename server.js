@@ -9,6 +9,9 @@ const {
   
 }=require('./db')
 const app = express()
+
+const SERVER_PORT = process.env.PORT || 9090 
+
 app.use(express.json())
 app.use(express.urlencoded({
   extended: true
@@ -167,9 +170,14 @@ app.post('/login', async (req, res) => {
 
 //#region db sync
 db.sync()
-  .then(() => {
-    app.listen(9090)
-  })
+.then(() => {
+console.log("Database have been synced")
+app.listen(SERVER_PORT, function () {
+      console.log("Server started on http://localhost:9090/Home.html");
+});
+}
+)
+    .catch((err) => console.error(err)) 
   //#endregion 
 
 //#region Add User
